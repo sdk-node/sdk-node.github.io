@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Hyperledger Fabric SDK for node.js Class: User</title>
+	<title>Hyperledger Fabric SDK for node.js Class: MSP</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,30 +86,19 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: User</h1>
+	<h1 class="page-title">Class: MSP</h1>
 <section>
 
 <header>
     
         <h2>
-        User
+        MSP
         </h2>
         
-            <div class="class-description">The User class represents users that have been enrolled and represented by
-an enrollment certificate (ECert) and a signing key. The ECert must have
-been signed by one of the CAs the blockchain network has been configured to trust.
-An enrolled user (having a signing key and ECert) can conduct chaincode instantiate,
-transactions and queries with the Chain.
-
-User ECerts can be obtained from a CA beforehand as part of installing and instantiating
-the application, or it can be obtained from the optional Fabric CA service via its
-enrollment process.
-
-Sometimes User identities are confused with Peer identities. User identities represent
-signing capability because it has access to the private key, while Peer identities in
-the context of the application/SDK only has the certificate for verifying signatures.
-An application cannot use the Peer identity to sign things because the application doesn’t
-have access to the Peer identity’s private key.</div>
+            <div class="class-description">MSP is the minimal Membership Service Provider Interface to be implemented
+to manage identities (in terms of signing and signature verification) represented
+by private keys and certificates generated from different algorithms (ECDSA, RSA, etc)
+and PKIs (software-managed or HSM based)</div>
         
     
 </header>
@@ -121,7 +110,7 @@ have access to the Peer identity’s private key.</div>
         
 <hr>
 <dt>
-    <h4 class="name" id="User"><span class="type-signature"></span>new User(cfg)</h4>
+    <h4 class="name" id="MSP"><span class="type-signature"></span>new MSP(config)</h4>
     
     
 </dt>
@@ -129,7 +118,7 @@ have access to the Peer identity’s private key.</div>
 
     
     <div class="description">
-        Constructor for a member.
+        Setup the MSP instance according to configuration information
     </div>
     
 
@@ -164,13 +153,13 @@ have access to the Peer identity’s private key.</div>
 
         <tr>
             
-                <td class="name"><code>cfg</code></td>
+                <td class="name"><code>config</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Object</span>
 
 
 
@@ -181,11 +170,17 @@ have access to the Peer identity’s private key.</div>
 
             
 
-            <td class="description last">The member name or an object with the following attributes:
-  - enrollmentID {string}: user name
-  - name {string}: user name, if "enrollmentID" is also specified, the "name" is ignored
-  - roles {string[]}: optional. array of roles
-  - affiliation {string}: optional. affiliation with a group or organization</td>
+            <td class="description last">A configuration object specific to the implementation. For this
+implementation it uses the following fields:
+		<br>`rootCerts`: array of <a href="global.html#Identity">Identity</a> representing trust anchors for validating
+          signing certificates. Required for MSPs used in verifying signatures
+		<br>`intermediateCerts`: array of <a href="global.html#Identity">Identity</a> representing trust anchors for validating
+          signing certificates. optional for MSPs used in verifying signatures
+		<br>`admins`: array of <a href="global.html#Identity">Identity</a> representing admin privileges
+		<br>`signer`: SigningIdentity signing identity. Required for MSPs used in signing
+		<br>`id`: {string} value for the identifier of this instance
+		<br>`orgs`: {string} array of organizational unit identifiers
+		<br>`cryptoSuite': the underlying <a href="module-api.CryptoSuite.html">module:api.CryptoSuite</a> for crypto primitive operations</td>
         </tr>
 
     
@@ -271,7 +266,7 @@ have access to the Peer identity’s private key.</div>
             
 <hr>
 <dt>
-    <h4 class="name" id="fromString"><span class="type-signature"></span>fromString()</h4>
+    <h4 class="name" id="deserializeIdentity"><span class="type-signature"></span>deserializeIdentity(serializedIdentity, storeKey)</h4>
     
     
 </dt>
@@ -279,7 +274,7 @@ have access to the Peer identity’s private key.</div>
 
     
     <div class="description">
-        Set the current state of this member from a string based JSON object
+        DeserializeIdentity deserializes an identity
     </div>
     
 
@@ -289,858 +284,66 @@ have access to the Peer identity’s private key.</div>
 
     
     
+        <h5>Parameters:</h5>
+        
 
-    
-<dl class="details">
-    
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-	
+        <th>Type</th>
 
-	
+        
 
-	
+        
 
-    
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
+    <tbody>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+        <tr>
             
-<div class="param-desc">
-    Promise of the unmarshalled Member object represented by the serialized string
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Member</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
+                <td class="name"><code>serializedIdentity</code></td>
             
-<hr>
-<dt>
-    <h4 class="name" id="getAffiliation"><span class="type-signature"></span>getAffiliation()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-    <div class="description">
-        Get the affiliation.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+            <td class="type">
             
-<div class="param-desc">
-    The affiliation.
-</div>
+                
+<span class="param-type">Array.&lt;byte></span>
 
 
 
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
             
-<hr>
-<dt>
-    <h4 class="name" id="getIdentity"><span class="type-signature"></span>getIdentity()</h4>
-    
-    
-</dt>
-<dd>
+            </td>
 
-    
-    <div class="description">
-        Get the <a href="global.html#Identity">Identity</a> object for this User instance, used to verify signatures
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
             
-<div class="param-desc">
-    the identity object that encapsulates the user's enrollment certificate
-</div>
 
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#Identity">Identity</a></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
             
-<hr>
-<dt>
-    <h4 class="name" id="getName"><span class="type-signature"></span>getName()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-    <div class="description">
-        Get the member name.
-    </div>
-    
+            <td class="description last">A protobuf-based serialization of an object with
+	      two fields: mspid and idBytes for certificate PEM bytes</td>
+        </tr>
 
     
 
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+        <tr>
             
-<div class="param-desc">
-    The member name.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
+                <td class="name"><code>storeKey</code></td>
             
-<hr>
-<dt>
-    <h4 class="name" id="getRoles"><span class="type-signature"></span>getRoles()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-    <div class="description">
-        Get the roles.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
+            <td class="type">
             
-<div class="param-desc">
-    The roles.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;string></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getSigningIdentity"><span class="type-signature"></span>getSigningIdentity()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Get the SigningIdentity object for this User instance, used to generate signatures
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    the identity object that encapsulates the user's private key for signing
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">SigningIdentity</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="getTCertBatchSize"><span class="type-signature"></span>getTCertBatchSize()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Get the transaction certificate (tcert) batch size, which is the number of tcerts retrieved
-from member services each time (i.e. in a single batch).
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The tcert batch size.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">int</span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="isEnrolled"><span class="type-signature"></span>isEnrolled()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Determine if this name has been enrolled.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    True if enrolled; otherwise, false.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
+                
 <span class="param-type">boolean</span>
 
 
 
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="setAffiliation"><span class="type-signature"></span>setAffiliation(affiliation)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Set the affiliation.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>affiliation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
             
             </td>
 
@@ -1148,218 +351,8 @@ from member services each time (i.e. in a single batch).
 
             
 
-            <td class="description last">The affiliation.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="setEnrollment"><span class="type-signature"></span>setEnrollment(privateKey, certificate, mspId, opts)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Set the enrollment object for this User instance
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>privateKey</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Key</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the private key object</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>certificate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the PEM-encoded string of certificate</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>mspId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The Member Service Provider id for the local signing identity</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>opts</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">optional. an object with the following attributes, all optional:
-  - cryptoSettings: {object} an object with the following attributes:
-     - software {boolean}: Whether to load a software-based implementation (true) or HSM implementation (false)
-default is true (for software based implementation), specific implementation module is specified
-in the setting 'crypto-suite-software'
-     - keysize {number}: The key size to use for the crypto suite instance. default is value of the setting 'crypto-keysize'
-     - algorithm {string}: Digital signature algorithm, currently supporting ECDSA only with value "EC"
-     - hash {string}: 'SHA2' or 'SHA3'
-  - KVSImplClass: {function} the User class persists crypto keys in a <a href="CryptoKeyStore.html">CryptoKeyStore</a>, there is a file-based implementation
-that is provided as the default. Application can use this parameter to override the default, such as saving the keys in a key store
-backed by database. If present, the value must be the class for the alternative implementation.
-  - kvsOpts: {object}: an options object specific to the implementation in KVSImplClass</td>
+            <td class="description last">if the user should be stored in the key store. Only when
+       false will a promise not be returned</td>
         </tr>
 
     
@@ -1423,7 +416,8 @@ backed by database. If present, the value must be the class for the alternative 
     
             
 <div class="param-desc">
-    Promise for successful completion of creating the user's signing Identity
+    Promise for an <a href="global.html#Identity">Identity</a> instance or
+          or the Identity object itself if "storeKey" argument is false
 </div>
 
 
@@ -1451,7 +445,7 @@ backed by database. If present, the value must be the class for the alternative 
             
 <hr>
 <dt>
-    <h4 class="name" id="setRoles"><span class="type-signature"></span>setRoles(roles)</h4>
+    <h4 class="name" id="getDefaultSigningIdentity"><span class="type-signature"></span>getDefaultSigningIdentity()</h4>
     
     
 </dt>
@@ -1459,7 +453,399 @@ backed by database. If present, the value must be the class for the alternative 
 
     
     <div class="description">
-        Set the roles.
+        Returns the default signing identity
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">SigningIdentity</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getId"><span class="type-signature"></span>getId()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get provider identifier
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getOrganizationUnits"><span class="type-signature"></span>getOrganizationUnits()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get organizational unit identifiers
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getPolicy"><span class="type-signature"></span>getPolicy()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Obtain the policy to govern changes
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getSigningIdentity"><span class="type-signature"></span>getSigningIdentity(identifier)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns a signing identity corresponding to the provided identifier
     </div>
     
 
@@ -1494,13 +880,13 @@ backed by database. If present, the value must be the class for the alternative 
 
         <tr>
             
-                <td class="name"><code>roles</code></td>
+                <td class="name"><code>identifier</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">string</span>
 
 
 
@@ -1511,7 +897,7 @@ backed by database. If present, the value must be the class for the alternative 
 
             
 
-            <td class="description last">The roles.</td>
+            <td class="description last">The identifier of the requested identity object</td>
         </tr>
 
     
@@ -1571,6 +957,26 @@ backed by database. If present, the value must be the class for the alternative 
     
 
     
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">SigningIdentity</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
 
     
 </dd>
@@ -1579,7 +985,7 @@ backed by database. If present, the value must be the class for the alternative 
             
 <hr>
 <dt>
-    <h4 class="name" id="setTCertBatchSize"><span class="type-signature"></span>setTCertBatchSize(batchSize)</h4>
+    <h4 class="name" id="validate"><span class="type-signature"></span>validate(id)</h4>
     
     
 </dt>
@@ -1587,7 +993,7 @@ backed by database. If present, the value must be the class for the alternative 
 
     
     <div class="description">
-        Set the transaction certificate (tcert) batch size.
+        Checks whether the supplied identity is valid
     </div>
     
 
@@ -1622,13 +1028,13 @@ backed by database. If present, the value must be the class for the alternative 
 
         <tr>
             
-                <td class="name"><code>batchSize</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">int</span>
+<span class="param-type"><a href="global.html#Identity">Identity</a></span>
 
 
 
@@ -1699,91 +1105,9 @@ backed by database. If present, the value must be the class for the alternative 
     
 
     
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Save the current state of this member as a string
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
     <h5>Returns:</h5>
     
             
-<div class="param-desc">
-    The state of this member as a string
-</div>
-
 
 
 <dl>
@@ -1792,7 +1116,7 @@ backed by database. If present, the value must be the class for the alternative 
     </dt>
     <dd>
         
-<span class="param-type">string</span>
+<span class="param-type">boolean</span>
 
 
 

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Hyperledger Fabric SDK for node.js Module: fabric-client</title>
+	<title>Hyperledger Fabric SDK for node.js Class: EndorsementPolicy</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,10 +86,17 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: fabric-client</h1>
+	<h1 class="page-title">Class: EndorsementPolicy</h1>
 <section>
 
 <header>
+    
+        <h2>
+        EndorsementPolicy
+        </h2>
+        
+            <div class="class-description">Governs the constructions of endorsement policies to be passed into the calls to instantiate chaincodes</div>
+        
     
 </header>
 
@@ -98,11 +105,24 @@
     <div class="container-overview">
     
         
-            <div class="description">This is the main module for the "fabric-client" package. It provides the convenience
-APIs to the classes of the package including Chain</div>
-        
+<hr>
+<dt>
+    <h4 class="name" id="EndorsementPolicy"><span class="type-signature"></span>new EndorsementPolicy()</h4>
+    
+    
+</dt>
+<dd>
 
-        
+    
+
+    
+
+    
+
+    
+    
+
+    
 <dl class="details">
     
 
@@ -142,7 +162,21 @@ APIs to the classes of the package including Chain</div>
 </dl>
 
 
-        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
     
     </div>
 
@@ -158,6 +192,166 @@ APIs to the classes of the package including Chain</div>
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id=".buildPolicy"><span class="type-signature">&lt;static> </span>buildPolicy(msps, policy)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Constructs an endorsement policy envelope. If the optional "policy" object is not present, a default
+policy of "a signature by any member from any of the organizations corresponding to the array of member
+service providers" is returned.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>msps</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="MSP.html">MSP</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of Member Service Provider objects representing the participants of the
+endorsement policy to be constructed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Policy">Policy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The policy specification. It has two high-level properties: identities and policy.
+see the type definition of <a href="global.html#Policy">Policy</a> for details.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
     
 
     
